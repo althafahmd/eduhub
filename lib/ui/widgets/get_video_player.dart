@@ -63,7 +63,23 @@ class _GetVideoPlayerState extends State<GetVideoPlayer> {
       error = "Failed to load video: $e";
     }
 
-    setState(() => isLoading = false);
+    if (mounted) {
+      setState(() => isLoading = false);
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant GetVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.url != widget.url || oldWidget.type != widget.type) {
+      youtubeController?.dispose();
+      vimeoController = null;
+      setState(() {
+        isLoading = true;
+        error = null;
+      });
+      initializePlayer();
+    }
   }
 
   @override
@@ -91,9 +107,15 @@ class _GetVideoPlayerState extends State<GetVideoPlayer> {
     );
   }
 
+  void disposeControllers() {
+    youtubeController?.dispose();
+    youtubeController = null;
+    vimeoController = null;
+  }
+
   @override
   void dispose() {
-    youtubeController?.dispose();
+    disposeControllers();
     super.dispose();
   }
 }
