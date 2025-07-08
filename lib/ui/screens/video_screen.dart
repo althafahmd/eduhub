@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../widgets/get_video_player.dart';
-import '../../utilities/screen_size_config.dart';
 import '../../core/models/video.dart';
 import '../../utilities/app_colors.dart';
 import '../../utilities/app_typography.dart';
